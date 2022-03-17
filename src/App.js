@@ -1,24 +1,42 @@
-import logo from './logo.svg';
-import './App.css';
+import "./App.css";
+import SplitComponent from "./SplitComponent";
+import { Switch, Route, Link } from "react-router-dom";
+import React, { lazy, Suspense } from "react";
+
+const Home = lazy(() => import('./pages/Home'));
+const About = lazy(() => import('./pages/About'));
+const Articles = lazy(() => import('./pages/Articles'));
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <>
+      <nav>
+        <ul>
+          <li>
+            <Link to="/">Home</Link>
+          </li>
+          <li>
+            <Link to="/about">About</Link>
+          </li>
+          <li>
+            <Link to="/articles">Articles</Link>
+          </li>
+        </ul>
+      </nav>
+			<Suspense fallback={<p>Loading...</p>}>
+				<Switch>
+					<Route path="/" exact>
+						<Home />
+					</Route>
+					<Route path="/about">
+						<About />
+					</Route>
+					<Route path="/articles">
+						<Articles />
+					</Route>
+				</Switch>
+			</Suspense>
+    </>
   );
 }
 
